@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\boutique;
 use Illuminate\Http\Request;
 use App\Http\Resources\boutique as Resourcesboutique;
+use Illuminate\Support\Facades\DB;
 
 class boutiqueController extends Controller
 {
@@ -15,8 +16,13 @@ class boutiqueController extends Controller
      */
     public function index()
     {
-        
-        return Resourcesboutique::collection(boutique::orderByDesc('Date_Ajout')->get());
+        $annoncesBoutique=DB::table('tblboutique')->join('tbltypeboutique','tbltypeboutique.Id_Type_Bou','tblboutique.Id_Type_Bou')
+        ->join('tblimage','tblimage.Id_Img','tblboutique.Id_img')
+        ->join('tbladresse','tbladresse.Id_adr','tblboutique.Id_Adr')
+       ->select('tblboutique.*','tbltypeboutique.Type_Bou','tblimage.Url','tbladresse.Adresse')
+       ->orderBy('Date_Ajout','desc')->take(100)->get();
+
+        return Resourcesboutique::collection($annoncesBoutique);
     }
 
     /**
@@ -36,9 +42,17 @@ class boutiqueController extends Controller
      * @param  \App\Models\boutique  $boutique
      * @return \Illuminate\Http\Response
      */
-    public function show(boutique $boutique)
+    public function show($boutique)
     {
-        return new Resourcesboutique($boutique);
+        $annonceBoutique=DB::table('tblboutique')->join('tbltypeboutique','tbltypeboutique.Id_Type_Bou','tblboutique.Id_Type_Bou')
+        ->join('tblimage','tblimage.Id_Img','tblboutique.Id_img')
+        ->join('tbladresse','tbladresse.Id_adr','tblboutique.Id_Adr')
+        ->select('tblboutique.*','tbltypeboutique.Type_Bou','tblimage.Url','tbladresse.Adresse')
+        ->where('tblboutique.Id_Bou',$boutique)
+        ->get();
+        return Resourcesboutique::collection($annonceBoutique);
+
+        //return new Resourcesboutique($boutique);
     }
 
     /**

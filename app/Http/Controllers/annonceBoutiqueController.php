@@ -21,7 +21,6 @@ class annonceBoutiqueController extends Controller
          $annoncesBoutique=DB::table('tblannonceboutique')->join('tblannonce','tblannonce.Id_An','tblannonceboutique.Id_An')
           ->join('tblboutique','tblboutique.Id_Bou','tblannonceboutique.Id_bou')
          ->select('tblannonce.*')->where('tblannonceboutique.Id_bou',$boutique)->get();
-
          return ResourcesAnnonce::collection($annoncesBoutique);
         //return "yes...";
         

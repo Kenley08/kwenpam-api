@@ -17,9 +17,9 @@ class annonce extends JsonResource
         return[
             'Id_An'=>$this->Id_An,
             'Id_Uti'=>$this->Id_Uti,
-            'Id_Cat_An'=>$this->Id_Cat_An,
-            'Id_Mon'=>$this->Id_Mon,
-            'Id_Img'=>$this->Id_Img,
+             'Monnaie'=>$this->Monnaie,
+            'Categorie'=>$this->Type_Cat,
+            'Url_Image'=>'https://kwenpam.com/ressource/images/article/'.$this->Url,
             'Prix'=>$this->Prix,
             'Preciser'=>$this->Preciser,
             'Description'=>$this->Description,
@@ -30,8 +30,6 @@ class annonce extends JsonResource
             'livraison'=>$this->livraison,
             'Date_Ajout'=>$this->Date_Ajout,
             'Date_Update'=>$this->Date_Update
-
-
         ];
     }
     

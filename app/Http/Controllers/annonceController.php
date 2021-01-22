@@ -6,6 +6,7 @@ use App\Models\annonce;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\annonce as ResourcesAnnonce;
+use Illuminate\Database\Query\JoinClause;
 
 class annonceController extends Controller
 {
@@ -16,8 +17,15 @@ class annonceController extends Controller
      */
     public function index()
     {
-    //  $annonces=annonce::All();
-     return  ResourcesAnnonce::collection(annonce::orderByDesc('Date_Ajout')->get());
+        $annonce = DB::table('tblannonce')
+        ->join('tblcategorie', 'tblcategorie.Id_Cat_An', '=', 'tblannonce.Id_Cat_An')
+        ->join('tblmonnaie', 'tblmonnaie.Id_Mon', '=', 'tblannonce.Id_Mon')
+        ->join('tblimage', 'tblimage.Id_Img', '=', 'tblannonce.Id_Img')
+        ->select('tblannonce.*', 'tblcategorie.Type_Cat', 'tblmonnaie.Monnaie','tblimage.Url')
+        ->orderBy('Date_Ajout','desc')->take(100)
+        ->get();
+     // return  $annonce->toJson();
+      return  ResourcesAnnonce::collection($annonce);
     }
 
     /**
@@ -37,10 +45,19 @@ class annonceController extends Controller
      * @param  \App\Models\annonce  $annonce
      * @return \Illuminate\Http\Response
      */
-    public function show(annonce $annonce)
+    public function show($annonce)
     {
-        // $ann=DB::table('tblannonce')->where('Id_An',$annonce->Id_An)->get();
-        return new ResourcesAnnonce($annonce);
+        $ann = DB::table('tblannonce')
+        ->join('tblcategorie', 'tblcategorie.Id_Cat_An', '=', 'tblannonce.Id_Cat_An')
+        ->join('tblmonnaie', 'tblmonnaie.Id_Mon', '=', 'tblannonce.Id_Mon')
+        ->join('tblimage', 'tblimage.Id_Img', '=', 'tblannonce.Id_Img')
+        ->select('tblannonce.*', 'tblcategorie.Type_Cat', 'tblmonnaie.Monnaie','tblimage.Url')
+        ->where('tblannonce.Id_An',$annonce)->get();
+
+    
+
+         // $ann->tojson();
+         return ResourcesAnnonce::collection($ann);
     }
 
     /**
