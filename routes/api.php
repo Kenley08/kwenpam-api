@@ -22,11 +22,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::apiResource('boutique.annonce','annonceBoutiqueController');
 Route::apiResource('annonce/categorie','annonceCategorieController');
+Route::apiResource('annonce/payment_delivery','annoncePaymentDeliveryController');
+Route::apiResource('annonce/images','annonceImagesController');
+Route::apiResource('annonce/payment_delivery_local','localAnnoncePaymentDeliveryController');
+Route::apiResource('abonnees','abonneesBoutiqueController');
+
 
 Route::middleware('auth:api')->group(function(){
     Route::apiResource('annonce','annonceController');
     Route::apiResource('boutique','boutiqueController');
-    // Route::apiResource('boutique.annonce','annonceBoutiqueController');
+   
 
 });
 
