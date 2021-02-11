@@ -26,6 +26,7 @@ Route::apiResource('annonce/payment_delivery','annoncePaymentDeliveryController'
 Route::apiResource('annonce/images','annonceImagesController');
 Route::apiResource('annonce/payment_delivery_local','localAnnoncePaymentDeliveryController');
 Route::apiResource('abonnees','abonneesBoutiqueController');
+Route::apiResource('annonce/page=1','abonneesBoutiqueController');
 
 
 Route::middleware('auth:api')->group(function(){

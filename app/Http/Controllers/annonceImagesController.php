@@ -17,14 +17,15 @@ class annonceImagesController extends Controller
     public function index()
     {
        
-        $annonce = DB::table('tblannonce')
-        ->join('tblcategorie', 'tblcategorie.Id_Cat_An', '=', 'tblannonce.Id_Cat_An')
-        ->join('tblmonnaie', 'tblmonnaie.Id_Mon', '=', 'tblannonce.Id_Mon')
-        ->join('tblimage', 'tblimage.Id_Img', '=', 'tblannonce.Id_Img')
-        ->select('tblannonce.*', 'tblcategorie.Type_Cat', 'tblmonnaie.Monnaie','tblimage.Url')
-        ->where('tblannonce.paye',1)
-         ->where('tblannonce.livraison',1)
-        ->orderBy('Date_Ajout','desc')->take(100)
+        $annonce = DB::table('tblannonce as a')
+        ->join('tblcategorie as c', 'c.Id_Cat_An', '=', 'a.Id_Cat_An')
+        ->join('tblmonnaie as m', 'm.Id_Mon', '=', 'a.Id_Mon')
+        ->join('tblimage as i', 'i.Id_Img', '=', 'a.Id_Img')
+        ->select('a.*', 'c.Type_Cat', 'm.Monnaie','i.Url')
+        ->where('a.paye',1)
+         ->where('a.livraison',1)
+         ->where('a.Activated','=',1)
+        ->orderBy('a.Date_Ajout','desc')->take(100)
         ->get();
 
         // $images = DB::table('tblimageannonce AS m')

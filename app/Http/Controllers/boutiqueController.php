@@ -16,16 +16,18 @@ class boutiqueController extends Controller
      */
     public function index()
     {
-        $annoncesBoutique=DB::table('tblannonceboutique')
-         ->join('tblboutique','tblboutique.Id_Bou','tblannonceboutique.Id_bou')
-         ->join('tblannonce','tblannonce.Id_An','tblannonceboutique.Id_An')
-         ->join('tbltypeboutique','tbltypeboutique.Id_Type_Bou','tblboutique.Id_Type_Bou')
-         ->join('tblimage','tblimage.Id_Img','tblboutique.Id_img')
-         ->join('tbladresse','tbladresse.Id_adr','tblboutique.Id_Adr')
-        ->select('tblboutique.*','tbltypeboutique.Type_Bou','tblimage.Url','tbladresse.Adresse')
-        ->where('tblannonce.paye',1)
-        ->where('tblannonce.livraison',1)
-        ->orderBy('Date_Ajout','desc')->take(100)->get();
+        $annoncesBoutique=DB::table('tblboutique')
+         ->join('tblannonceboutique','tblannonceboutique.Id_Bou','tblboutique.Id_bou')
+            ->select('tblboutique.*')
+        //  ->join('tblannonce','tblannonce.Id_An','tblannonceboutique.Id_An')
+        //  ->join('tbltypeboutique','tbltypeboutique.Id_Type_Bou','tblboutique.Id_Type_Bou')
+        //  ->join('tblimage','tblimage.Id_Img','tblboutique.Id_img')
+        //  ->join('tbladresse','tbladresse.Id_adr','tblboutique.Id_Adr')
+        // ->select('tblboutique.*','tbltypeboutique.Type_Bou','tblimage.Url','tbladresse.Adresse')
+        // ->where('tblannonce.paye',1)
+        // ->where('tblannonce.livraison',1)
+        // ->orderBy('Date_Ajout','desc')->take(100)
+        ->get();
          return Resourcesboutique::collection($annoncesBoutique);
 
     }

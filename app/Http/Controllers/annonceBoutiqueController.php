@@ -27,7 +27,9 @@ class annonceBoutiqueController extends Controller
           ->join('tblimage', 'tblimage.Id_Img', '=', 'tblannonce.Id_Img')
          ->select('tblannonce.*','tblcategorie.Type_Cat', 'tblmonnaie.Monnaie','tblimage.Url')
          ->where('tblannonceboutique.Id_bou',$boutique)
-         ->orderBy('Date_Ajout','desc')->take(100)->get();
+         ->where('a.Etat',1)
+         ->where('a.Activated','=',1)
+         ->orderBy('a.Date_Ajout','desc')->take(100)->get();
 
          return ResourcesAnnonce::collection($annoncesBoutique);
         //return "yes...";

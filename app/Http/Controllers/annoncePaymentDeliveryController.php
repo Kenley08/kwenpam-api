@@ -25,7 +25,7 @@ class annoncePaymentDeliveryController extends Controller
         ->select('tblannonce.*', 'tblcategorie.Type_Cat', 'tblmonnaie.Monnaie','tblimage.Url')
         ->where('tblannonce.paye',1)
          ->where('tblannonce.livraison',1)
-        ->orderBy('Date_Ajout','desc')->take(100)
+        ->orderBy('tblannonce.Date_Ajout','desc')->take(100)
         ->get();
         
          $an=annoncesRessource::collection($annonce);
